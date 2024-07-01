@@ -1,9 +1,10 @@
 package com.websupercar.supercar.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.websupercar.supercar.entities.enums.OrderStatus;
 
 import jakarta.persistence.Entity;
@@ -19,25 +20,28 @@ import jakarta.persistence.Table;
 public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Date moment;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	private Instant moment;
 	private OrderStatus orderStatus;
-	@ManyToOne @JoinColumn(name = "client_id")
+	@ManyToOne 
+	@JoinColumn(name = "client_id")
 	private User client;
 
-	public Order() {}
+	public Order(){}
 
-	public Order(Long id, Date moment, OrderStatus orderStatus) {
+	public Order(Long id, Instant moment, User client) {
 		this.id = id;
 		this.moment = moment;
-		this.orderStatus = orderStatus;
+		this.client = client;
 	}
 
-	public Date getMoment() {
+	public Instant getMoment() {
 		return moment;
 	}
-	public void setMoment(Date moment) {
+	public void setMoment(Instant moment) {
 		this.moment = moment;
 	}
 	public OrderStatus getOrderStatus() {
