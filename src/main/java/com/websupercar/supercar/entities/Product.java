@@ -1,14 +1,31 @@
 package com.websupercar.supercar.entities;
 
 import java.util.Objects;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Product {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+
+@Entity
+@Table(name = "tb_product")
+public class Product implements Serializable{
+	private static final long serialVersionUID = 1L;
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String description;
 	private String imgUrl;
 	private Double price;
-	
+	@Transient
+	private Set<Category> categories = new HashSet<>();
+
 	public Product() {}
 
 	public Product(Long id, String name, String description, String imgUrl, Double price) {
@@ -16,6 +33,13 @@ public class Product {
 		this.name = name;
 		this.description = description;
 		this.imgUrl = imgUrl;
+		this.price = price;
+	}
+
+	public Product(Long id, String name, String description, Double price) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
 		this.price = price;
 	}
 
@@ -43,6 +67,9 @@ public class Product {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	public Set<Category> getCategories() {
+		return categories;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -53,7 +80,6 @@ public class Product {
 				", description=" + description + 
 				", imgUrl=" + imgUrl + ", price=" + price + "]";
 	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
