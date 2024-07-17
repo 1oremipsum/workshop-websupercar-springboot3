@@ -42,10 +42,16 @@ public class TestConfig implements CommandLineRunner{
 
 		Product p1 = new Product(null, "BOLT EUV bumper 2023/2023",
 		"BOLT EUV bumper 2023/2023 chevrolet", 400.0);
+		p1.getCategories().add(cat1);
+
 		Product p2 = new Product(null, "MOBIL SUPER 15W-40 SEMI-SYSTEMIC", 
 		"Passenger cars, SUVs and trucks running on gasoline, ethanol and CNG", 20.0);
+		p2.getCategories().add(cat2);
+		
 		Product p3 = new Product(null, "25Ton Nail Type Industrial Hydraulic Jack - MIU25000",
 		"The upper head also serves as a lifting base.", 300.0);
+		p3.getCategories().add(cat2);
+		p3.getCategories().add(cat3);
 
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "mb3452", "988888888");
 		User u2 = new User(null, "Alex Grey", "alex@gmail.com", "al5692", "977777777");
