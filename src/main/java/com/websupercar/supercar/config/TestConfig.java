@@ -12,8 +12,10 @@ import com.websupercar.supercar.entities.User;
 import com.websupercar.supercar.entities.enums.OrderStatus;
 import com.websupercar.supercar.entities.Category;
 import com.websupercar.supercar.entities.Order;
+import com.websupercar.supercar.entities.OrderItem;
 import com.websupercar.supercar.entities.Product;
 import com.websupercar.supercar.repositories.CategoryRepository;
+import com.websupercar.supercar.repositories.OrderItemRepository;
 import com.websupercar.supercar.repositories.OrderRepository;
 import com.websupercar.supercar.repositories.ProductRepository;
 import com.websupercar.supercar.repositories.UserRepository;
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner{
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -60,9 +65,15 @@ public class TestConfig implements CommandLineRunner{
 		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2); 
 		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT, u1);
 
+		OrderItem oi1 = new OrderItem(o1, p1, 1, p1.getPrice());
+		OrderItem oi4 = new OrderItem(o1, p2, 1, p2.getPrice());
+		OrderItem oi2 = new OrderItem(o2, p2, 2, p2.getPrice());
+		OrderItem oi3 = new OrderItem(o3, p3, 1, p3.getPrice());
+
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 	}
 }
