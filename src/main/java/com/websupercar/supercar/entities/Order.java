@@ -9,6 +9,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.websupercar.supercar.entities.enums.OrderStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -34,6 +36,8 @@ public class Order implements Serializable{
 	private User client;
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	private Payment payment;
 
 	public Order(){}
 
@@ -42,6 +46,14 @@ public class Order implements Serializable{
 		this.moment = moment;
 		setOrderStatus(orderStatus);
 		this.client = client;
+	}
+
+	public Order(Long id, Instant moment, OrderStatus orderStatus,User client, Payment payment) {
+		this.id = id;
+		this.moment = moment;
+		setOrderStatus(orderStatus);
+		this.client = client;
+		this.payment = payment;
 	}
 
 	public Instant getMoment() {
@@ -66,14 +78,14 @@ public class Order implements Serializable{
 	public Set<OrderItem> getItems(){
 		return items;
 	}
+	public Payment getPayment() {
+		return payment;
+	}
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
 	public Long getId() {
 		return id;
-	}
-
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", moment=" + moment + 
-				", orderStatus=" + orderStatus + "]";
 	}
 
 	@Override

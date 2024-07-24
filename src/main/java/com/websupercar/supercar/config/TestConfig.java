@@ -13,6 +13,7 @@ import com.websupercar.supercar.entities.enums.OrderStatus;
 import com.websupercar.supercar.entities.Category;
 import com.websupercar.supercar.entities.Order;
 import com.websupercar.supercar.entities.OrderItem;
+import com.websupercar.supercar.entities.Payment;
 import com.websupercar.supercar.entities.Product;
 import com.websupercar.supercar.repositories.CategoryRepository;
 import com.websupercar.supercar.repositories.OrderItemRepository;
@@ -69,6 +70,9 @@ public class TestConfig implements CommandLineRunner{
 		OrderItem oi4 = new OrderItem(o1, p2, 1, p2.getPrice());
 		OrderItem oi2 = new OrderItem(o2, p2, 2, p2.getPrice());
 		OrderItem oi3 = new OrderItem(o3, p3, 1, p3.getPrice());
+
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T20:53:07Z"), o1);
+		o1.setPayment(pay1);
 
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
